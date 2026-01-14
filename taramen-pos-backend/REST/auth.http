@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:8000/api/v1
+@email = admin@taramen.com
+@password = password
+
+@token = 2|eset5zJWeg7R0yZTIvJhQj1sP1xdmab4z3dUgSsVa9b31f7a
+
+### ------------------------------------------------------------------------
+### 1. Login (Public)
+### ------------------------------------------------------------------------
+POST {{baseUrl}}/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "{{email}}",
+    "password": "{{password}}"
+}
+
+### VARIABLE CAPTURE (Internal Note)
+# The extension automatically captures the response from the request above 
+# named "loginRequest". We use it below as {{loginRequest.response.body.token}}
+
+
+### ------------------------------------------------------------------------
+### 2. Get User Profile (Protected)
+### ------------------------------------------------------------------------
+GET {{baseUrl}}/user
+Authorization: Bearer {{token}}
+Accept: application/json
+
+
+### ------------------------------------------------------------------------
+### 3. Logout (Protected)
+### ------------------------------------------------------------------------
+POST {{baseUrl}}/logout
+Authorization: Bearer {{token}}
+Accept: application/json
